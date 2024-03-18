@@ -1,0 +1,15 @@
+compile/
+vivado*.log
+vivado*.jou
+*.adf
+*.duser
+*.wsp
+Edfmap.ini
+bde.set
+compilation.order
+compile.cfg
+log/
+projlib.cfg
+stimulators.set
+synthesis.order
+/.vscode
