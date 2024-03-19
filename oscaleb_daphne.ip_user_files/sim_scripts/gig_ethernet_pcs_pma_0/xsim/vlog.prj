@@ -1,0 +1,7 @@
+verilog gig_ethernet_pcs_pma_v16_2_1  \
+"../../../ipstatic/hdl/gig_ethernet_pcs_pma_v16_2_rfs.v" \
+
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

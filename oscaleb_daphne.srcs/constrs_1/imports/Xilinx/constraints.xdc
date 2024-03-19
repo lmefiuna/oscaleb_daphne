@@ -27,7 +27,7 @@ set_clock_groups -name async_groups -asynchronous -group [get_clocks -include_ge
 # Ethernet MGT is "TX1" is QUAD216-1 -> X0Y5 in XC7A200T FBG676
 # refclk is 125MHz on MGTREFCLK0_216 pins F11/E11.  No inversion on DAPHNE board.
 
-set_property LOC GTPE2_CHANNEL_X0Y5 [get_cells */*/*/transceiver_inst/gtwizard_inst/*/gtwizard_i/gt0_GTWIZARD_i/gtpe2_i]
+#set_property LOC GTPE2_CHANNEL_X0Y5 [get_cells */*/*/transceiver_inst/gtwizard_inst/*/gtwizard_i/gt0_GTWIZARD_i/gtpe2_i]
 set_property PACKAGE_PIN F11 [get_ports gtrefclk_p]
 
 # SFP module LOSS OF SIGNAL indicator IO bank VCCO=3.3V
@@ -39,6 +39,26 @@ set_property IOSTANDARD LVTTL [get_ports sfp_los]
 
 set_property PACKAGE_PIN K8 [get_ports sfp_tx_dis]
 set_property IOSTANDARD LVTTL [get_ports sfp_tx_dis]
+
+#set_property LOC B7 [get_ports sfp_tx_p]
+#set_property LOC A7 [get_ports sfp_tx_n]
+#set_property LOC B11 [get_ports sfp_rx_p}]
+#set_property LOC A11 [get_ports sfp_rx_n]
+#set_property IOSTANDARD LVDS_25 [get_ports {sfp_tx_*}]  # This is not used since the daq being placed with LOC already defines its LVDS IOStandard
+
+set_property LOC D14 [get_ports sfp_rx_p]
+set_property LOC C14 [get_ports sfp_rx_n]
+set_property LOC D8 [get_ports sfp_tx_p]
+set_property LOC C8 [get_ports sfp_tx_n]
+
+#set_property DIFF_TERM true [get_ports sfp_rx_p]
+#set_property DIFF_TERM true [get_ports sfp_rx_n]
+#set_property DIFF_TERM true [get_ports sfp_tx_p]
+#set_property DIFF_TERM true [get_ports sfp_tx_n]
+#set_property IOSTANDARD LVDS_25 [get_ports sfp_rx_p]
+#set_property IOSTANDARD LVDS_25 [get_ports sfp_rx_n]
+#set_property IOSTANDARD LVDS_25 [get_ports sfp_tx_p]
+#set_property IOSTANDARD LVDS_25 [get_ports sfp_tx_n]
 
 # reset pin is from uC, I/O bank 35, VCCO=3.3V note ACTIVE LOW on DAPHNE
 
