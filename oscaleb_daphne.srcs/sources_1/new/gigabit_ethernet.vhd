@@ -38,7 +38,11 @@ entity gigabit_ethernet is
         sfp_los    : in std_logic;  -- high if SFP RX fiber is dark
         sfp_tx_dis : out std_logic; -- high to disable SFP transmitter
         sfp_tx_p   : out std_logic;
-        sfp_tx_n   : out std_logic
+        sfp_tx_n   : out std_logic;
+
+        status_vector      : out std_logic_vector(15 downto 0); -- Core status.
+        gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
+        gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
     );
 end gigabit_ethernet;
 
@@ -70,7 +74,7 @@ architecture Behavioral of gigabit_ethernet is
             gmii_rxd     : out std_logic_vector(7 downto 0); -- Received Data to client MAC.
             gmii_rx_dv   : out std_logic;                    -- Received control signal to client MAC.
             gmii_rx_er   : out std_logic;                    -- Received control signal to client MAC.
-            gmii_isolate : out std_logic;                    -- Tristate control to electrically isolate GMII.
+            gmii_isolate : out std_logic;                    -- Tristate control to electrically isolate GMII
 
             configuration_vector : in std_logic_vector(4 downto 0);  -- Alternative to MDIO interface.
             an_interrupt         : out std_logic;                    -- Interrupt to processor to signal that Auto-Negotiation has completed
@@ -126,13 +130,10 @@ architecture Behavioral of gigabit_ethernet is
     signal gmii_rxd, gmii_txd     : std_logic_vector(7 downto 0);
     signal gmii_tx_en, gmii_tx_er : std_logic;
     signal gmii_rx_dv, gmii_rx_er : std_logic;
-    signal status_vector          : std_logic_vector(15 downto 0);
 
     signal tx_data, rx_data     : std_logic_vector(63 downto 0);
     signal rx_addr, rx_addr_reg : std_logic_vector(31 downto 0);
     signal tx_rden, rx_wren     : std_logic;
-
-
 begin
     gtrefclk_p_ibuf_inst : IBUF port map(I => gtrefclk_p, O => gtrefclk_p_ibuf);
     gtrefclk_n_ibuf_inst : IBUF port map(I => gtrefclk_n, O => gtrefclk_n_ibuf);
@@ -227,6 +228,8 @@ begin
 
     -- drive the READY signal back to OEI immediately, this means immediate writes and 
     -- read latency of 1. Specific to the OEI handshaking.
-    ready <= rx_wren or tx_rden;
+    ready              <= rx_wren or tx_rden;
+    gmii_rx_dv_led_out <= gmii_rx_dv;
+    gmii_tx_en_led_out <= gmii_tx_en;
 
 end Behavioral;

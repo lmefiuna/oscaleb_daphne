@@ -59,7 +59,11 @@ architecture Behavioral of top_level is
             sfp_los    : in std_logic;  -- high if SFP RX fiber is dark
             sfp_tx_dis : out std_logic; -- high to disable SFP transmitter
             sfp_tx_p   : out std_logic;
-            sfp_tx_n   : out std_logic
+            sfp_tx_n   : out std_logic;
+
+            status_vector      : out std_logic_vector(15 downto 0); -- Core status.
+            gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
+            gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
         );
     end component;
 
@@ -68,17 +72,20 @@ architecture Behavioral of top_level is
             reset_async : in std_logic;
             sclk        : in std_logic;
 
-            led_0 : in std_logic;
-            led_1 : in std_logic;
-            led_2 : in std_logic;
-            led_3 : in std_logic;
-            led_4 : in std_logic;
-            led_5 : in std_logic;
-            led   : out std_logic_vector(5 downto 0) -- DAPHNE PCB LEDs are active LOW
+            led_1  : in std_logic;
+            led_2  : in std_logic;
+            led_3  : in std_logic;
+            led_4  : in std_logic;
+            led_13 : in std_logic;
+            led_14 : in std_logic;
+            led    : out std_logic_vector(5 downto 0) -- DAPHNE PCB LEDs are active LOW
         );
     end component;
 
     signal reset_async : std_logic;
+
+    signal status_vector                          : std_logic_vector(15 downto 0); -- gigabit ethernet status vector
+    signal gmii_rx_dv_led_out, gmii_tx_en_led_out : std_logic;                     -- gigabit ethernet tx/rx status output for led
 
     signal sysclk_ibuf, clkfbout, clkfbout_buf, clkout0, clkout1, clkout2, clkout3, locked : std_logic;
     signal sclk                                                                            : std_logic;
@@ -92,7 +99,12 @@ begin
     --      200MHz used to calibrate the IDELAYs in the front end.
     --      62.5MHz master clock
     --      437.5MHz (7 x the master clock) used for ISERDES in the front end (also produce an inverted copy of this.)
-    sysclk_ibufds_inst : UNISIM.VComponents.IBUFGDS port map(O => sysclk_ibuf, I => sysclk_p, IB => sysclk_n);
+    sysclk_ibufds_inst : UNISIM.VComponents.IBUFGDS
+    port map(
+        O  => sysclk_ibuf,
+        I  => sysclk_p,
+        IB => sysclk_n
+    );
 
     mmcm_inst : UNISIM.VComponents.MMCME2_ADV
     generic map(
@@ -158,9 +170,17 @@ begin
         RST          => reset_async
     );
 
-    clkfb_inst : UNISIM.VComponents.BUFG port map(I => clkfbout, O => clkfbout_buf);
+    clkfb_inst : UNISIM.VComponents.BUFG
+    port map(
+        I => clkfbout,
+        O => clkfbout_buf
+    );
 
-    clk0_inst : UNISIM.VComponents.BUFG port map(I => clkout0, O => sclk); -- system clock 200MHz
+    clk0_inst : UNISIM.VComponents.BUFG
+    port map(
+        I => clkout0,
+        O => sclk
+    ); -- system clock 200MHz
 
     reset_async <= not reset_n; -- active LOW reset from the microcontroller
 
@@ -176,7 +196,11 @@ begin
         sfp_los    => sfp_los,    -- high if SFP RX fiber is dark
         sfp_tx_dis => sfp_tx_dis, -- high to disable SFP transmitter
         sfp_tx_p   => sfp_tx_p,
-        sfp_tx_n   => sfp_tx_n
+        sfp_tx_n   => sfp_tx_n,
+
+        status_vector      => status_vector,
+        gmii_rx_dv_led_out => gmii_rx_dv_led_out,
+        gmii_tx_en_led_out => gmii_tx_en_led_out
     );
 
     leds_controller_inst : leds_controller
@@ -184,13 +208,14 @@ begin
         reset_async => reset_async,
         sclk        => sclk,
 
-        led_0 => '0',
-        led_1 => '1',
-        led_2 => '0',
-        led_3 => '1',
-        led_4 => '0',
-        led_5 => '1',
-        led   => led
+        led_1  => locked,                                                 -- "LED1" on if main PLL MMCM locked and clocks running
+        led_2  => not sfp_los,                                            -- "LED2" on if SFP module is detecting a signal
+        led_3  => status_vector(0),                                       -- "LED3" on if Ethernet link is UP
+        led_4  => '1' when (status_vector(11 downto 10) = "10") else '0', -- "LED4" on if link speed is 1000
+        led_13 => gmii_rx_dv_led_out or gmii_tx_en_led_out,               -- "LED13" is on if there is ethernet RX or TX activity
+        led_14 => '0',                                                    -- trig_sync, -- "LED14" is on when DAPHNE is triggered
+
+        led => led
     );
 
 end Behavioral;
