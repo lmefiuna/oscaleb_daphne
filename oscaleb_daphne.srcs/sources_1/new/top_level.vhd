@@ -85,9 +85,21 @@ signal bitslip0_mclk_reg, bitslip1_mclk_reg, bitslip_mclk: array_5x9_type;
 signal oeiclk                                                                           : std_logic; ---125MHz clk ?? --n/c
 
 signal rx_data                                                                          : std_logic_vector(63 downto 0); --n/c
+signal rx_wren                                                                          : std_logic;
+
+signal rx_addr, rx_addr_reg: std_logic_vector(31 downto 0);
+
+signal status_vector   :  std_logic_vector(15 downto 0);
+
+signal tx_data : std_logic_vector (63 downto 0);
 
 --
 signal delay_ld                                                                         : std_logic_vector(4 downto 0); --1 signal p/ afe --n/c
+
+
+signal spy_bufr: array_9x16_type;
+
+signal locked: std_logic;
 
 component endpoint
 port
@@ -115,11 +127,11 @@ component AquisitionManager is
     afe_p: in std_logic_vector(8 downto 0);
     afe_n: in std_logic_vector(8 downto 0);
 
-
     -- FPGA interface
 
     mclk:   in std_logic; -- master clock 62.5MHz
     fclk:   in std_logic; -- 7 x master clock = 437.5MHz
+    oeiclk: in std_logic; -- eth clock 125MHz
     -- fclkb:  in std_logic; 
     sclk:   in std_logic; -- 200MHz system clock, constant
     reset:  in std_logic; -- async reset the front end logic (must do this before use!)
@@ -128,12 +140,33 @@ component AquisitionManager is
     delay_clk: in std_logic; -- clock for writing iserdes delay value
     delay_ld:  in  std_logic_vector(4 downto 0); -- write delay value strobe
     delay_din: in  std_logic_vector(4 downto 0);  -- delay value to write range 0-31
-
-
-     sfp_los:    in std_logic
     
+    rx_addr_reg: in std_logic_vector(31 downto 0);
+    
+    sfp_los:    in std_logic
+
+  
+  
   );
 end component AquisitionManager;
+
+component eth_mux is
+ Port ( 
+    oeiclk          : in std_logic;
+    locked          : in std_logic;
+    rx_addr         : in std_logic_vector(31 downto 0);
+    rx_data         : in std_logic_vector(63 downto 0);
+    
+    rx_wren         : in std_logic;
+    reset_async     : in std_logic;
+    
+    status_vector   : in std_logic_vector(15 downto 0);
+    spy_bufr        : in array_9x16_type;    
+    rx_addr_reg: out std_logic_vector(31 downto 0);
+    tx_data         : out std_logic_vector(63 downto 0)
+ 
+ );
+end component eth_mux;
 
 
 begin
@@ -156,7 +189,7 @@ sys_timing_endpoint : endpoint
    afe_clk_n    => afe_clk_n,
    
    -- Clock in ports
-   locked => open
+   locked => locked
  );
  
  
@@ -166,6 +199,7 @@ AFE_0: AquisitionManager
 
         afe_p => afe_p(AFE),
         afe_n => afe_n(AFE),
+        oeiclk => oeiclk,
         mclk  => sys_clk62_5,
         fclk  => sys_clk437_5,
         sclk  => sys_clk200,
@@ -177,9 +211,23 @@ AFE_0: AquisitionManager
         
 
         sfp_los => sfp_los_inv,
-
+        rx_addr_reg =>rx_addr_reg,
 
         bitslip   => bitslip_mclk(AFE) --bitslip_mclk,
+    );
+    
+gen_eth_mux: eth_mux
+    port map (
+        oeiclk => oeiclk,
+        locked => locked,
+        rx_addr => rx_addr,
+        rx_data => rx_data,
+        rx_wren => rx_wren,
+        reset_async => reset_async,
+        status_vector => status_vector,
+        spy_bufr => spy_bufr,
+        tx_data => tx_data,
+        rx_addr_reg=>rx_addr_reg
     );
 
 

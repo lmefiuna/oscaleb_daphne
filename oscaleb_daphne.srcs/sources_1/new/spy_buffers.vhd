@@ -41,16 +41,15 @@ entity spy_buffers is
 
     clkb:  in  std_logic;
     addrb: in  std_logic_vector(11 downto 0);
-    dob:   out std_logic_vector(15 downto 0)
+
   
-  
+    spy_bufr: out array_9x16_type
   );
 end spy_buffers;
 
 
 architecture Behavioral of spy_buffers is
 
-signal spy_bufr: array_9x16_type;
 
 
 
@@ -84,8 +83,8 @@ begin
                 dia   => afe_dout_filtered(b),
                 -- oeiclk domain    
                 clkb  => clkb,
-                addrb => raddrb,
-                dob   => spy_bufr(a)(b));
+                addrb => addrb,
+                dob   => spy_bufr(b));
         end generate gen_spy_bit;
 
 
