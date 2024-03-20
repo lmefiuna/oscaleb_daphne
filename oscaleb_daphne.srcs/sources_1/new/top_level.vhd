@@ -74,7 +74,7 @@ end top_level;
 architecture Behavioral of top_level is
 
 
-signal reset_async                                                                      :   std_logic;
+signal reset_async,sfp_los_inv                                                          :   std_logic;
 
 signal sys_clk62_5,sys_clk200,sys_clk437_5                                              :   std_logic;
 
@@ -139,6 +139,7 @@ end component AquisitionManager;
 begin
 
 reset_async <= not reset_n;
+sfp_los_inv <= not sfp_los;
 
 sys_timing_endpoint : endpoint
    port map ( 
@@ -175,7 +176,7 @@ AFE_0: AquisitionManager
         delay_ld  => delay_ld(4 downto 0),-- delay_ld(4 downto 0),
         
 
-        sfp_los => sfp_los,
+        sfp_los => sfp_los_inv,
 
 
         bitslip   => bitslip_mclk(AFE) --bitslip_mclk,

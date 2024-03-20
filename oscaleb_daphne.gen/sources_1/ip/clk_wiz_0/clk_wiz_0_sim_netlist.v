@@ -2,7 +2,7 @@
 // Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-// Date        : Mon Mar 18 13:45:46 2024
+// Date        : Wed Mar 20 11:03:42 2024
 // Host        : Oscar-Linux running 64-bit Ubuntu 22.04.3 LTS
 // Command     : write_verilog -force -mode funcsim
 //               /home/oscar/Documents/TFG/DAPHNE/oscaleb_daphne/oscaleb_daphne.gen/sources_1/ip/clk_wiz_0/clk_wiz_0_sim_netlist.v
