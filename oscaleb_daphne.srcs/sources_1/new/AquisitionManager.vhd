@@ -57,6 +57,8 @@ entity AquisitionManager is
     
     rx_addr_reg: in std_logic_vector(31 downto 0);
     
+    spy_bufr: out array_9x16_type;
+    
     sfp_los:    in std_logic
 
   
@@ -75,7 +77,7 @@ signal trigger_wire : std_logic_vector(7 downto 0);
 
 signal afe_dout_pad_bits,afe_dout_pad_filtered_bits: std_logic_vector(143 downto 0);
 
-signal afe_dout_filtered, spy_bufr: array_9x16_type;
+signal afe_dout_filtered : array_9x16_type;
 
 
 component fe is

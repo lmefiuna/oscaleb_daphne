@@ -28,7 +28,7 @@ synthesis.order
 *.os
 *.js
 *.pb
-*.dcp
+#*.dcp
 *.hwdef
 *.vds
 *.veo
