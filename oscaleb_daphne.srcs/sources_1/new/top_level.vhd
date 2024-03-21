@@ -52,7 +52,7 @@ entity top_level is
     gtrefclk_n : in std_logic;
     sfp_rx_p   : in std_logic;
     sfp_rx_n   : in std_logic;
-    sfp_los    : in std_logic;   -- high if SFP RX fiber is dark
+    sfp_los    : in std_logic;  -- high if SFP RX fiber is dark
     sfp_tx_dis : out std_logic; -- high to disable SFP transmitter
     sfp_tx_p   : out std_logic;
     sfp_tx_n   : out std_logic;
@@ -106,7 +106,9 @@ architecture Behavioral of top_level is
       rx_data_out : out std_logic_vector(63 downto 0);
       rx_addr_out : out std_logic_vector(31 downto 0);
       rx_wren_out : out std_logic;
+      tx_data_in  : in std_logic_vector(63 downto 0);
 
+      oeiclk_out         : out std_logic;
       status_vector      : out std_logic_vector(15 downto 0); -- Core status.
       gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
       gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
@@ -177,6 +179,7 @@ architecture Behavioral of top_level is
   component eth_mux is
     port (
       oeiclk  : in std_logic;
+      mclk    : in std_logic;
       locked  : in std_logic;
       rx_addr : in std_logic_vector(31 downto 0);
       rx_data : in std_logic_vector(63 downto 0);
@@ -186,8 +189,11 @@ architecture Behavioral of top_level is
 
       status_vector : in std_logic_vector(15 downto 0);
       spy_bufr      : in array_9x16_type;
-      rx_addr_reg   : out std_logic_vector(31 downto 0);
-      tx_data       : out std_logic_vector(63 downto 0)
+
+      rx_addr_reg : out std_logic_vector(31 downto 0);
+      delay_ld    : out std_logic;
+      fe_reset    : out std_logic;
+      tx_data     : out std_logic_vector(63 downto 0)
 
     );
   end component eth_mux;
@@ -231,7 +237,9 @@ begin
     rx_data_out   => rx_data,
     rx_addr_out   => rx_addr,
     rx_wren_out   => rx_wren,
+    tx_data_in    => tx_data,
     status_vector => status_vector,
+    oeiclk_out    => oeiclk,
 
     gmii_rx_dv_led_out => gmii_rx_dv_led_out,
     gmii_tx_en_led_out => gmii_tx_en_led_out
@@ -260,6 +268,7 @@ begin
   gen_eth_mux : eth_mux
   port map(
     oeiclk        => oeiclk,
+    mclk          => sys_clk62_5,
     locked        => locked,
     rx_addr       => rx_addr,
     rx_data       => rx_data,
@@ -268,7 +277,9 @@ begin
     status_vector => status_vector,
     spy_bufr      => spy_bufr,
     tx_data       => tx_data,
-    rx_addr_reg   => rx_addr_reg
+    rx_addr_reg   => rx_addr_reg,
+    delay_ld      => open,
+    fe_reset      => open
   );
 
   leds_controller_inst : leds_controller

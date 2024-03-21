@@ -43,7 +43,9 @@ entity gigabit_ethernet is
         rx_data_out : out std_logic_vector(63 downto 0);
         rx_addr_out : out std_logic_vector(31 downto 0);
         rx_wren_out : out std_logic;
-
+        tx_data_in     : in std_logic_vector(63 downto 0);
+        
+        oeiclk_out: out std_logic;
         status_vector      : out std_logic_vector(15 downto 0); -- Core status.
         gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
         gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
@@ -127,8 +129,9 @@ architecture Behavioral of gigabit_ethernet is
             tx_clk             : out std_logic
         );
     end component;
-
-    signal gtrefclk_bufg_out, oeiclk, ready : std_logic;
+   
+    signal gtrefclk_bufg_out, oeiclk_signal, ready : std_logic;
+    --signal gtrefclk_bufg_out, ready : std_logic;
     signal gtrefclk_p_ibuf, gtrefclk_n_ibuf : std_logic;
 
     signal gmii_rxd, gmii_txd     : std_logic_vector(7 downto 0);
@@ -155,7 +158,7 @@ begin
         rxn                              => sfp_rx_n,
         mmcm_locked_out                  => open,
         userclk_out                      => open,
-        userclk2_out                     => oeiclk, -- 125MHz clock to drive OEI logic, does it run constantly?
+        userclk2_out                     => oeiclk_signal, -- 125MHz clock to drive OEI logic, does it run constantly?
         rxuserclk_out                    => open,
         rxuserclk2_out                   => open,
         independent_clock_bufg           => sclk, -- 200MHz system clock always running
@@ -193,7 +196,7 @@ begin
     eth_int_inst : ethernet_interface
     port map(
         reset_in           => reset_async,
-        tx_data            => tx_data,
+        tx_data            => tx_data_in,
         ready              => ready,
         b_data             => X"0000000000000000", -- burst mode not used
         b_data_we          => '0',
@@ -213,7 +216,7 @@ begin
         phy_rxd    => gmii_rxd,
         phy_rx_dv  => gmii_rx_dv,
         phy_rx_er  => gmii_rx_er,
-        master_clk => oeiclk,
+        master_clk => oeiclk_signal,
         phy_txd    => gmii_txd,
         phy_tx_en  => gmii_tx_en,
         phy_tx_er  => gmii_tx_er,
@@ -222,14 +225,14 @@ begin
 
     -- delay the read address by one clock, this register will be used to drive the readback mux
     -- going to Ethernet interface
-    readmux_proc : process (oeiclk)
-    begin
-        if rising_edge(oeiclk) then
-            rx_addr_reg <= rx_addr;
-        end if;
-    end process readmux_proc;
+--    readmux_proc : process (oeiclk)
+--    begin
+--        if rising_edge(oeiclk) then
+--            rx_addr_reg <= rx_addr;
+--        end if;
+--    end process readmux_proc;
 
-    tx_data <= (X"00000000" & rx_addr_reg);
+--    tx_data <= (X"00000000" & rx_addr_reg);
 
     -- drive the READY signal back to OEI immediately, this means immediate writes and 
     -- read latency of 1. Specific to the OEI handshaking.
@@ -240,5 +243,6 @@ begin
     rx_data_out <= rx_data;
     rx_addr_out <= rx_addr;
     rx_wren_out <= rx_wren;
+    oeiclk_out  <= oeiclk_signal;
 
 end Behavioral;
