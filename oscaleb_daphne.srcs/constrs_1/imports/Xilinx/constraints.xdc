@@ -40,6 +40,11 @@ set_property IOSTANDARD LVTTL [get_ports sfp_los]
 set_property PACKAGE_PIN K8 [get_ports sfp_tx_dis]
 set_property IOSTANDARD LVTTL [get_ports sfp_tx_dis]
 
+set_property LOC D14 [get_ports sfp_rx_p]
+set_property LOC C14 [get_ports sfp_rx_n]
+set_property LOC D8 [get_ports sfp_tx_p]
+set_property LOC C8 [get_ports sfp_tx_n]
+
 # reset pin is from uC, I/O bank 35, VCCO=3.3V note ACTIVE LOW on DAPHNE
 
 set_property PACKAGE_PIN J8 [get_ports reset_n]
