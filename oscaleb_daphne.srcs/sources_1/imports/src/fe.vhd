@@ -59,7 +59,7 @@ port(
     --bitslip:  in  array_5x9_type; -- bitslip sync to MCLK, assert for only 1 clock cycle at a time
     bitslip: in std_logic_vector(8 downto 0);
     delay_clk: in std_logic; -- clock for writing iserdes delay value
-    delay_ld:  in  std_logic_vector(4 downto 0); -- write delay value strobe
+    delay_ld:  in  std_logic; -- write delay value strobe
     delay_din: in  std_logic_vector(4 downto 0);  -- delay value to write range 0-31
 
     q: out array_9x16_type
@@ -155,7 +155,7 @@ begin
             reset     => reset_mclk_reg,
             bitslip   => bitslip(b),
             delay_clk => delay_clk,
-            delay_ld  => delay_ld(AFE),
+            delay_ld  => delay_ld,
             delay_din => delay_din,
             q         => q(b));  -- 5x9x16
 

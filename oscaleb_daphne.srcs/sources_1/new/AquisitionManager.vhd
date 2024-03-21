@@ -52,7 +52,7 @@ entity AquisitionManager is
     --bitslip:  in  array_5x9_type; -- bitslip sync to MCLK, assert for only 1 clock cycle at a time
     bitslip: in std_logic_vector(8 downto 0);
     delay_clk: in std_logic; -- clock for writing iserdes delay value
-    delay_ld:  in  std_logic_vector(4 downto 0); -- write delay value strobe
+    delay_ld:  in  std_logic; -- write delay value strobe
     delay_din: in  std_logic_vector(4 downto 0);  -- delay value to write range 0-31
     
     rx_addr_reg: in std_logic_vector(31 downto 0);
@@ -77,7 +77,7 @@ signal trigger_wire : std_logic_vector(7 downto 0);
 
 signal afe_dout_pad_bits,afe_dout_pad_filtered_bits: std_logic_vector(143 downto 0);
 
-signal afe_dout_filtered : array_9x16_type;
+signal afe_dout_filtered ,spy_bufr_signal: array_9x16_type;
 
 
 component fe is
@@ -100,7 +100,7 @@ port(
     --bitslip:  in  array_5x9_type; -- bitslip sync to MCLK, assert for only 1 clock cycle at a time
     bitslip: in std_logic_vector(8 downto 0);
     delay_clk: in std_logic; -- clock for writing iserdes delay value
-    delay_ld:  in  std_logic_vector(4 downto 0); -- write delay value strobe
+    delay_ld:  in  std_logic; -- write delay value strobe
     delay_din: in  std_logic_vector(4 downto 0);  -- delay value to write range 0-31
 
     q: out array_9x16_type
@@ -198,9 +198,10 @@ begin
         afe_dout_filtered => afe_dout_filtered,
         clkb => oeiclk,
         addrb => rx_addr_reg(11 downto 0),
-        spy_bufr => spy_bufr
+        spy_bufr => spy_bufr_signal
     );
     
+    spy_bufr <= spy_bufr_signal;
     
 
 
