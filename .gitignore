@@ -29,7 +29,7 @@ oscaleb_daphne.runs/.jobs
 *.os
 *.js
 *.pb
-*.dcp
+# *.dcp
 *.hwdef
 *.vds
 *.veo

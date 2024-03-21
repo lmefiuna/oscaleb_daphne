@@ -61,6 +61,10 @@ architecture Behavioral of top_level is
             sfp_tx_p   : out std_logic;
             sfp_tx_n   : out std_logic;
 
+            rx_data_out : out std_logic_vector(63 downto 0);
+            rx_addr_out : out std_logic_vector(31 downto 0);
+            rx_wren_out : out std_logic;
+
             status_vector      : out std_logic_vector(15 downto 0); -- Core status.
             gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
             gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
@@ -84,8 +88,12 @@ architecture Behavioral of top_level is
 
     signal reset_async : std_logic;
 
-    signal status_vector                          : std_logic_vector(15 downto 0); -- gigabit ethernet status vector
-    signal gmii_rx_dv_led_out, gmii_tx_en_led_out : std_logic;                     -- gigabit ethernet tx/rx status output for led
+    signal rx_data       : std_logic_vector(63 downto 0);
+    signal rx_addr       : std_logic_vector(31 downto 0);
+    signal rx_wren       : std_logic;
+    signal status_vector : std_logic_vector(15 downto 0); -- gigabit ethernet status vector
+
+    signal gmii_rx_dv_led_out, gmii_tx_en_led_out : std_logic; -- gigabit ethernet tx/rx status output for led
 
     signal sysclk_ibuf, clkfbout, clkfbout_buf, clkout0, clkout1, clkout2, clkout3, locked : std_logic;
     signal sclk                                                                            : std_logic;
@@ -198,7 +206,11 @@ begin
         sfp_tx_p   => sfp_tx_p,
         sfp_tx_n   => sfp_tx_n,
 
-        status_vector      => status_vector,
+        rx_data_out   => rx_data,
+        rx_addr_out   => rx_addr,
+        rx_wren_out   => rx_wren,
+        status_vector => status_vector,
+
         gmii_rx_dv_led_out => gmii_rx_dv_led_out,
         gmii_tx_en_led_out => gmii_tx_en_led_out
     );

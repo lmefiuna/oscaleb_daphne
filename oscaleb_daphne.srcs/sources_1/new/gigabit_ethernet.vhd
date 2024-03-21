@@ -40,6 +40,10 @@ entity gigabit_ethernet is
         sfp_tx_p   : out std_logic;
         sfp_tx_n   : out std_logic;
 
+        rx_data_out : out std_logic_vector(63 downto 0);
+        rx_addr_out : out std_logic_vector(31 downto 0);
+        rx_wren_out : out std_logic;
+
         status_vector      : out std_logic_vector(15 downto 0); -- Core status.
         gmii_rx_dv_led_out : out std_logic;                     -- output signal for managing led status
         gmii_tx_en_led_out : out std_logic                      -- output signal for managing led status
@@ -134,6 +138,7 @@ architecture Behavioral of gigabit_ethernet is
     signal tx_data, rx_data     : std_logic_vector(63 downto 0);
     signal rx_addr, rx_addr_reg : std_logic_vector(31 downto 0);
     signal tx_rden, rx_wren     : std_logic;
+
 begin
     gtrefclk_p_ibuf_inst : IBUF port map(I => gtrefclk_p, O => gtrefclk_p_ibuf);
     gtrefclk_n_ibuf_inst : IBUF port map(I => gtrefclk_n, O => gtrefclk_n_ibuf);
@@ -231,5 +236,9 @@ begin
     ready              <= rx_wren or tx_rden;
     gmii_rx_dv_led_out <= gmii_rx_dv;
     gmii_tx_en_led_out <= gmii_tx_en;
+    
+    rx_data_out <= rx_data;
+    rx_addr_out <= rx_addr;
+    rx_wren_out <= rx_wren;
 
 end Behavioral;
