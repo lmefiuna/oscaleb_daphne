@@ -46,6 +46,7 @@ generic(version: std_logic_vector(27 downto 0) := X"1234567"); -- git commit num
     
     status_vector   : in std_logic_vector(15 downto 0);
     spy_bufr        : in array_9x16_type;    
+    --spy_bufr_append: in std_logic_vector(143 downto 0); 
     
     rx_addr_reg: out std_logic_vector(31 downto 0);
     delay_ld: out std_logic;
@@ -60,6 +61,7 @@ end eth_mux;
 architecture Behavioral of eth_mux is
 
 --signal mclk, delay_ld,fe_reset: std_logic;
+--signal spy_bufr        : array_9x16_type; 
 
 signal test_reg:     std_logic_vector (63 downto 0);
 
@@ -108,6 +110,8 @@ begin
         end if;
     end process readmux_proc;
     
+    
+
     
     testreg_we <= '1' when (std_match(rx_addr,TESTREG_ADDR) and rx_wren='1') else '0';
     test_proc: process(oeiclk)
@@ -194,10 +198,8 @@ begin
             bitslip0_oei_reg <= bitslip_tmp;
             bitslip1_oei_reg <= bitslip0_oei_reg;
             bitslip2_oei_reg <= bitslip1_oei_reg;
-            for a in 4 downto 0 loop
-                for b in 8 downto 0 loop
-                    bitslip3_oei_reg(b) <= bitslip2_oei_reg(b) or bitslip1_oei_reg(b) or bitslip0_oei_reg(b); -- will be high for minimum 3 oei clks
-                end loop;
+            for b in 8 downto 0 loop
+                bitslip3_oei_reg(b) <= bitslip2_oei_reg(b) or bitslip1_oei_reg(b) or bitslip0_oei_reg(b); -- will be high for minimum 3 oei clks
             end loop;
         end if;
     end process bs_oei_proc;

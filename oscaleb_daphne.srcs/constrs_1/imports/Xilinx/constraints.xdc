@@ -40,10 +40,10 @@ set_property IOSTANDARD LVTTL [get_ports sfp_los]
 set_property PACKAGE_PIN K8 [get_ports sfp_tx_dis]
 set_property IOSTANDARD LVTTL [get_ports sfp_tx_dis]
 
-set_property LOC D14 [get_ports sfp_rx_p]
-set_property LOC C14 [get_ports sfp_rx_n]
-set_property LOC D8 [get_ports sfp_tx_p]
-set_property LOC C8 [get_ports sfp_tx_n]
+set_property PACKAGE_PIN C14 [get_ports sfp_rx_n]
+set_property PACKAGE_PIN D14 [get_ports sfp_rx_p]
+set_property PACKAGE_PIN C8 [get_ports sfp_tx_n]
+set_property PACKAGE_PIN D8 [get_ports sfp_tx_p]
 
 # reset pin is from uC, I/O bank 35, VCCO=3.3V note ACTIVE LOW on DAPHNE
 
@@ -212,3 +212,5 @@ set_property DIFF_TERM true [get_ports {afe_?[?][?]}]
 set_property BITSTREAM.GENERAL.COMPRESS TRUE [current_design]
 set_property CFGBVS VCCO [current_design]
 set_property CONFIG_VOLTAGE 3.3 [current_design]
+
+

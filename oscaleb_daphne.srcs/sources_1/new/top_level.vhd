@@ -90,7 +90,8 @@ architecture Behavioral of top_level is
   signal fe_reset: std_logic;
   signal locked : std_logic;
   signal trig_sync: std_logic;
-
+  signal spy_bufr_append: std_logic_vector(143 downto 0);
+  
   component gigabit_ethernet
     port (
       reset_async : in std_logic;
@@ -171,7 +172,8 @@ architecture Behavioral of top_level is
       delay_ld  : in std_logic; -- write delay value strobe
       delay_din : in std_logic_vector(4 downto 0); -- delay value to write range 0-31
 
-      spy_bufr        : out array_9x16_type;  
+      --spy_bufr        : out array_9x16_type;  
+      spy_bufr_append: out std_logic_vector(143 downto 0); 
       rx_addr_reg : in std_logic_vector(31 downto 0);
       trig_sync: in std_logic;
 
@@ -192,7 +194,8 @@ architecture Behavioral of top_level is
         reset_async     : in std_logic;
         
         status_vector   : in std_logic_vector(15 downto 0);
-        spy_bufr        : in array_9x16_type;  
+        spy_bufr        : in array_9x16_type; 
+        --spy_bufr_append: in std_logic_vector(143 downto 0); 
         
         rx_addr_reg: out std_logic_vector(31 downto 0);
         delay_ld: out std_logic;
@@ -207,6 +210,10 @@ begin
 
   reset_async <= not reset_n;
   sfp_los_inv <= not sfp_los;
+  
+  gen_spy_signals: for b in 8 downto 0 generate
+            spy_bufr(b) <= spy_bufr_append(((b)*16 + 15) downto ((b)*16));
+  end generate gen_spy_signals;
 
   sys_timing_endpoint : endpoint
   port map(
@@ -267,8 +274,9 @@ begin
     delay_ld    => delay_ld, -- delay_ld(4 downto 0),
     sfp_los     => sfp_los_inv,
     rx_addr_reg => rx_addr_reg,
+    spy_bufr_append => spy_bufr_append,
     --spy_bufr      => spy_bufr,
-    spy_bufr      => open,
+    --spy_bufr      => open,
     trig_sync =>trig_sync,
     bitslip => bitslip_mclk --bitslip_mclk,
   );
@@ -284,6 +292,7 @@ begin
     reset_async   => reset_async,
     status_vector => status_vector,
     spy_bufr      => spy_bufr,
+    --spy_bufr_append => spy_bufr_append,
     tx_data       => tx_data,
     rx_addr_reg   => rx_addr_reg,
     delay_ld      => delay_ld,

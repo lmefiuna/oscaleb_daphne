@@ -43,13 +43,14 @@ entity spy_buffers is
     addrb: in  std_logic_vector(11 downto 0);
 
   
-    spy_bufr: out array_9x16_type
+    --spy_bufr: out array_9x16_type
+    spy_bufr_append: out std_logic_vector(143 downto 0)
   );
 end spy_buffers;
 
 
 architecture Behavioral of spy_buffers is
-
+signal spy_bufr: array_9x16_type;
 
 
 
@@ -87,5 +88,8 @@ begin
                 dob   => spy_bufr(b));
         end generate gen_spy_bit;
 
+    gen_spy_signals: for b in 8 downto 0 generate
+            spy_bufr_append(((b)*16 + 15) downto ((b)*16)) <= spy_bufr(b);
+    end generate gen_spy_signals;
 
 end Behavioral;

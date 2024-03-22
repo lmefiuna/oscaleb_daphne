@@ -58,8 +58,8 @@ entity AquisitionManager is
     rx_addr_reg: in std_logic_vector(31 downto 0);
     trig_sync: in std_logic;
     
-    spy_bufr: out array_9x16_type;
-    
+    --spy_bufr: out array_9x16_type;
+    spy_bufr_append: out std_logic_vector(143 downto 0);
     sfp_los:    in std_logic
 
   
@@ -71,7 +71,7 @@ end AquisitionManager;
 
 architecture Behavioral of AquisitionManager is
 
-signal afe_dout: array_9x16_type;
+signal afe_dout,spy_bufr: array_9x16_type;
 
 signal trigger_wire : std_logic_vector(7 downto 0);
 
@@ -79,6 +79,8 @@ signal trigger_wire : std_logic_vector(7 downto 0);
 signal afe_dout_pad_bits,afe_dout_pad_filtered_bits: std_logic_vector(143 downto 0);
 
 signal afe_dout_filtered ,spy_bufr_signal: array_9x16_type;
+
+--signal spy_bufr_append : std_logic_vector(143 downto 0);
 
 
 component fe is
@@ -124,6 +126,7 @@ component hpf_pedestal_recovery_filter_v5 is
     );
 end component hpf_pedestal_recovery_filter_v5;
 
+
 component spy_buffers is
   Port ( 
     clka:  in std_logic;  
@@ -135,7 +138,8 @@ component spy_buffers is
     addrb: in  std_logic_vector(11 downto 0);
 
   
-    spy_bufr: out array_9x16_type
+    --spy_bufr: out array_9x16_type
+    spy_bufr_append: out std_logic_vector(143 downto 0)
   );
 end component spy_buffers;
 
@@ -155,6 +159,7 @@ begin
         gen_bs_bit: for b in 8 downto 0 generate
             afe_dout_pad_bits(((b)*16 + 15) downto ((b)*16)) <= afe_dout(b);
             afe_dout_filtered(b) <= afe_dout_pad_filtered_bits(((b)*16 + 15) downto ((b)*16));
+            spy_bufr_append(((b)*16 + 15) downto ((b)*16)) <= spy_bufr(b);
         end generate gen_bs_bit;
         
 
@@ -199,7 +204,8 @@ begin
         afe_dout_filtered => afe_dout_filtered,
         clkb => oeiclk,
         addrb => rx_addr_reg(11 downto 0),
-        spy_bufr => spy_bufr_signal
+        --spy_bufr => spy_bufr_signal
+        spy_bufr_append => spy_bufr_append
     );
     
     spy_bufr <= spy_bufr_signal;

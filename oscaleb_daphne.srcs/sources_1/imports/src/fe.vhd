@@ -127,11 +127,11 @@ begin
     
     -- this controller is required for calibrating IDELAY elements...
 --    -N/C-
---    IDELAYCTRL_inst: IDELAYCTRL
---        port map(
---            REFCLK => sclk,
---            RST    => idelayctrl_rst_reg, -- minimum pulse width is 60ns! MUST pulse this before using idelay!
---            RDY    => open);
+    IDELAYCTRL_inst: IDELAYCTRL
+        port map(
+            REFCLK => sclk,
+            RST    => idelayctrl_rst_reg, -- minimum pulse width is 60ns! MUST pulse this before using idelay!
+            RDY    => open);
 
     -- the reset pulse sent to febit should be sync to mclk, square that up here
     -- used by iserdes modules, not used by idelay
