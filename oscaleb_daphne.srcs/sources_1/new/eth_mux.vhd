@@ -51,6 +51,7 @@ generic(version: std_logic_vector(27 downto 0) := X"1234567"); -- git commit num
     delay_ld: out std_logic;
     fe_reset: out std_logic;
     bitslip_mclk: out std_logic_vector(8 downto 0);
+    trig_sync: out std_logic;
     tx_data         : out std_logic_vector(63 downto 0)
  
  );
@@ -71,7 +72,32 @@ signal bitslip_tmp, bitslip0_oei_reg, bitslip1_oei_reg,bitslip2_oei_reg, bitslip
 signal bitslip0_mclk_reg, bitslip1_mclk_reg: std_logic_vector(8 downto 0);
 
 
+signal trig_gbe: std_logic;
+signal trig_gbe0_reg, trig_gbe1_reg, trig_gbe2_reg, trig_gbe_total: std_logic;
+
+
 begin
+
+    -- TRIG DAPHNE V2   
+    trig_gbe <= '1' when (std_match(rx_addr,TRIGGER_ADDR) and rx_wren='1') else '0';
+
+    trig_oei_proc: process(oeiclk)
+    begin
+        if rising_edge(oeiclk) then
+            trig_gbe0_reg <= trig_gbe;
+            trig_gbe1_reg <= trig_gbe0_reg;
+            trig_gbe2_reg <= trig_gbe1_reg;
+        end if;
+    end process trig_oei_proc;
+
+    trig_proc: process(mclk) -- note external trigger input is inverted on DAPHNE2
+    begin
+        if rising_edge(mclk) then
+            trig_sync <= trig_gbe0_reg or trig_gbe1_reg or trig_gbe2_reg; 
+        end if;
+    end process trig_proc;
+
+
 
 
     readmux_proc: process(oeiclk)

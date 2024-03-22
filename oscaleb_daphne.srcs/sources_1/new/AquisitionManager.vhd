@@ -56,6 +56,7 @@ entity AquisitionManager is
     delay_din: in  std_logic_vector(4 downto 0);  -- delay value to write range 0-31
     
     rx_addr_reg: in std_logic_vector(31 downto 0);
+    trig_sync: in std_logic;
     
     spy_bufr: out array_9x16_type;
     
@@ -194,7 +195,7 @@ begin
     port map (
         clka => mclk,
         reset => reset,
-        trig => '1', -----------
+        trig => trig_sync, -----------
         afe_dout_filtered => afe_dout_filtered,
         clkb => oeiclk,
         addrb => rx_addr_reg(11 downto 0),

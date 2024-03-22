@@ -89,6 +89,7 @@ architecture Behavioral of top_level is
   signal bitslip_mclk: std_logic_vector(8 downto 0);
   signal fe_reset: std_logic;
   signal locked : std_logic;
+  signal trig_sync: std_logic;
 
   component gigabit_ethernet
     port (
@@ -172,6 +173,7 @@ architecture Behavioral of top_level is
 
       spy_bufr        : out array_9x16_type;  
       rx_addr_reg : in std_logic_vector(31 downto 0);
+      trig_sync: in std_logic;
 
       sfp_los : in std_logic
 
@@ -196,6 +198,7 @@ architecture Behavioral of top_level is
         delay_ld: out std_logic;
         fe_reset: out std_logic;
         bitslip_mclk: out std_logic_vector(8 downto 0);
+        trig_sync: out std_logic;
         tx_data         : out std_logic_vector(63 downto 0)
      
      );
@@ -266,6 +269,7 @@ begin
     rx_addr_reg => rx_addr_reg,
     --spy_bufr      => spy_bufr,
     spy_bufr      => open,
+    trig_sync =>trig_sync,
     bitslip => bitslip_mclk --bitslip_mclk,
   );
 
@@ -284,6 +288,7 @@ begin
     rx_addr_reg   => rx_addr_reg,
     delay_ld      => delay_ld,
     bitslip_mclk => bitslip_mclk,
+    trig_sync =>trig_sync,
     fe_reset      => fe_reset
   );
 
