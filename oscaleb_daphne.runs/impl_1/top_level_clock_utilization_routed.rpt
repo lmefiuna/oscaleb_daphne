@@ -1,7 +1,7 @@
 Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2023 Advanced Micro Devices, Inc. All Rights Reserved.
 ---------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2023.2 (lin64) Build 4029153 Fri Oct 13 20:13:54 MDT 2023
-| Date         : Fri Mar 22 15:11:45 2024
+| Date         : Mon Mar 25 14:25:02 2024
 | Host         : Oscar-Linux running 64-bit Ubuntu 22.04.3 LTS
 | Command      : report_clock_utilization -file top_level_clock_utilization_routed.rpt
 | Design       : top_level
@@ -29,11 +29,12 @@ Table of Contents
 13. Device Cell Placement Summary for Global Clock g6
 14. Device Cell Placement Summary for Global Clock g7
 15. Clock Region Cell Placement per Global Clock: Region X0Y0
-16. Clock Region Cell Placement per Global Clock: Region X0Y1
-17. Clock Region Cell Placement per Global Clock: Region X1Y1
-18. Clock Region Cell Placement per Global Clock: Region X0Y2
-19. Clock Region Cell Placement per Global Clock: Region X0Y3
-20. Clock Region Cell Placement per Global Clock: Region X0Y4
+16. Clock Region Cell Placement per Global Clock: Region X1Y0
+17. Clock Region Cell Placement per Global Clock: Region X0Y1
+18. Clock Region Cell Placement per Global Clock: Region X1Y1
+19. Clock Region Cell Placement per Global Clock: Region X0Y2
+20. Clock Region Cell Placement per Global Clock: Region X0Y3
+21. Clock Region Cell Placement per Global Clock: Region X0Y4
 
 1. Clock Primitive Utilization
 ------------------------------
@@ -57,11 +58,11 @@ Table of Contents
 +-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+--------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------------------+
 | Global Id | Source Id | Driver Type/Pin | Constraint | Site           | Clock Region | Load Clock Region | Clock Loads | Non-Clock Loads | Clock Period | Clock                                                                                                                          | Driver Pin                                                        | Net                                                             |
 +-----------+-----------+-----------------+------------+----------------+--------------+-------------------+-------------+-----------------+--------------+--------------------------------------------------------------------------------------------------------------------------------+-------------------------------------------------------------------+-----------------------------------------------------------------+
-| g0        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y0  | n/a          |                 3 |        2388 |               0 |       16.000 | clk_out2_clk_wiz_0_1                                                                                                           | sys_timing_endpoint/clock_manager/inst/clkout2_buf/O              | sys_timing_endpoint/clock_manager/inst/clk_out2                 |
-| g1        | src1      | BUFG/O          | None       | BUFGCTRL_X0Y1  | n/a          |                 5 |        2256 |               0 |        8.000 | clkout0                                                                                                                        | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_userclk2/O | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
+| g0        | src0      | BUFG/O          | None       | BUFGCTRL_X0Y0  | n/a          |                 4 |        2414 |               0 |       16.000 | clk_out2_clk_wiz_0_1                                                                                                           | sys_timing_endpoint/clock_manager/inst/clkout2_buf/O              | sys_timing_endpoint/clock_manager/inst/clk_out2                 |
+| g1        | src1      | BUFG/O          | None       | BUFGCTRL_X0Y1  | n/a          |                 6 |        2245 |               0 |        8.000 | clkout0                                                                                                                        | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_userclk2/O | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
 | g2        | src2      | BUFG/O          | None       | BUFGCTRL_X0Y2  | n/a          |                 5 |         325 |               0 |        5.000 | clk_out1_clk_wiz_0_1                                                                                                           | sys_timing_endpoint/clock_manager/inst/clkout1_buf/O              | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
 | g3        | src3      | BUFG/O          | None       | BUFGCTRL_X0Y3  | n/a          |                 3 |         111 |               0 |       16.000 | clkout1                                                                                                                        | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_userclk/O  | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk       |
-| g4        | src4      | BUFG/O          | None       | BUFGCTRL_X0Y16 | n/a          |                 3 |          76 |               0 |        8.000 | oeiclk                                                                                                                         | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_gtrefclk/O | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
+| g4        | src4      | BUFG/O          | None       | BUFGCTRL_X0Y16 | n/a          |                 2 |          76 |               0 |        8.000 | oeiclk                                                                                                                         | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_gtrefclk/O | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
 | g5        | src5      | BUFG/O          | None       | BUFGCTRL_X0Y4  | n/a          |                 1 |          18 |               0 |        2.286 | clk_out3_clk_wiz_0_1                                                                                                           | sys_timing_endpoint/clock_manager/inst/clkout3_buf/O              | sys_timing_endpoint/clock_manager/inst/clk_out3                 |
 | g6        | src6      | BUFG/O          | None       | BUFGCTRL_X0Y17 | n/a          |                 1 |           1 |               0 |       16.000 | gigabit_ehternet_inst/phy_inst/U0/pcs_pma_block_i/transceiver_inst/gtwizard_inst/U0/gtwizard_i/gt0_GTWIZARD_i/gtpe2_i/TXOUTCLK | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_txoutclk/O | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/txoutclk_bufg |
 | g7        | src7      | BUFG/O          | None       | BUFGCTRL_X0Y5  | n/a          |                 1 |           1 |               0 |       10.000 | clkfbout_clk_wiz_0_1                                                                                                           | sys_timing_endpoint/clock_manager/inst/clkf_buf/O                 | sys_timing_endpoint/clock_manager/inst/clkfbout_buf_clk_wiz_0   |
@@ -111,15 +112,15 @@ Table of Contents
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
 | Clock Region Name | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail | Used | Avail |
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
-| X0Y0              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     4 |    0 |     0 |   18 |    50 |    0 |    50 | 3081 |  2700 | 1482 |   800 |   14 |    60 |    7 |    30 |   30 |    60 |
-| X1Y0              |    0 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     4 |    0 |     0 |    0 |    50 |    0 |    50 |    0 |  2500 |    0 |   800 |    0 |    40 |    0 |    20 |    0 |    40 |
-| X0Y1              |    3 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  421 |  4200 |   93 |  1400 |    4 |   100 |    0 |    50 |   10 |   100 |
+| X0Y0              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     4 |    0 |     0 |   18 |    50 |    0 |    50 | 3151 |  2700 | 1498 |   800 |   14 |    60 |    7 |    30 |   35 |    60 |
+| X1Y0              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     4 |    0 |     0 |    0 |    50 |    0 |    50 |   16 |  2500 |   12 |   800 |    0 |    40 |    0 |    20 |    5 |    40 |
+| X0Y1              |    3 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  350 |  4200 |   61 |  1400 |    3 |   100 |    0 |    50 |    0 |   100 |
 | X1Y1              |    2 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    1 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    1 |    50 |    0 |  4000 |    0 |  1400 |    0 |    80 |    0 |    40 |    0 |    80 |
-| X0Y2              |    5 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    1 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  408 |  3600 |  131 |  1400 |    0 |   100 |    0 |    50 |    0 |   100 |
+| X0Y2              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    1 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  309 |  3600 |  100 |  1400 |    0 |   100 |    0 |    50 |    0 |   100 |
 | X1Y2              |    0 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |    0 |  4000 |    0 |  1400 |    0 |    80 |    0 |    40 |    0 |    80 |
-| X0Y3              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |   44 |  3600 |   26 |  1400 |    0 |   100 |    0 |    50 |    0 |   100 |
+| X0Y3              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |  157 |  3600 |   97 |  1400 |    0 |   100 |    0 |    50 |    0 |   100 |
 | X1Y3              |    0 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     0 |    0 |     0 |    0 |    50 |    0 |    50 |    0 |  4000 |    0 |  1400 |    0 |    80 |    0 |    40 |    0 |    80 |
-| X0Y4              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    1 |     4 |    0 |     1 |    0 |    50 |    0 |    50 |  163 |  2550 |   68 |   750 |    0 |    50 |    0 |    25 |    0 |    60 |
+| X0Y4              |    4 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    1 |     4 |    0 |     1 |    0 |    50 |    0 |    50 |  149 |  2550 |   48 |   750 |    0 |    50 |    0 |    25 |    0 |    60 |
 | X1Y4              |    0 |    12 |    0 |     4 |    0 |     2 |    0 |     4 |    0 |     1 |    0 |     1 |    0 |     4 |    0 |     0 |    0 |    50 |    0 |    50 |    0 |  2500 |    0 |   800 |    0 |    40 |    0 |    20 |    0 |    40 |
 +-------------------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+------+-------+
 * Global Clock column represents track count; while other columns represents cell counts
@@ -146,7 +147,7 @@ All Modules
 +-----------+-----------------+-------------------+----------------------+-------------+---------------+-------------+----------+----------------+----------+-------------------------------------------------+
 | Global Id | Driver Type/Pin | Driver Region (D) | Clock                | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net                                             |
 +-----------+-----------------+-------------------+----------------------+-------------+---------------+-------------+----------+----------------+----------+-------------------------------------------------+
-| g0        | BUFG/O          | n/a               | clk_out2_clk_wiz_0_1 |      16.000 | {0.000 8.000} |        2370 |       18 |              0 |        0 | sys_timing_endpoint/clock_manager/inst/clk_out2 |
+| g0        | BUFG/O          | n/a               | clk_out2_clk_wiz_0_1 |      16.000 | {0.000 8.000} |        2396 |       18 |              0 |        0 | sys_timing_endpoint/clock_manager/inst/clk_out2 |
 +-----------+-----------------+-------------------+----------------------+-------------+---------------+-------------+----------+----------------+----------+-------------------------------------------------+
 * Slice Loads column represents load cell count of all cell types other than IO, GT and clock resources
 ** IO Loads column represents load cell count of IO types
@@ -154,15 +155,15 @@ All Modules
 **** GT Loads column represents load cell count of GT types
 
 
-+----+-------+----+-----------------------+
-|    | X0    | X1 | HORIZONTAL PROG DELAY |
-+----+-------+----+-----------------------+
-| Y4 |     0 |  0 |                     - |
-| Y3 |     0 |  0 |                     - |
-| Y2 |     0 |  0 |                     - |
-| Y1 |    92 |  1 |                     0 |
-| Y0 |  2295 |  0 |                     0 |
-+----+-------+----+-----------------------+
++----+-------+-----+-----------------------+
+|    | X0    | X1  | HORIZONTAL PROG DELAY |
++----+-------+-----+-----------------------+
+| Y4 |     0 |   0 |                     - |
+| Y3 |     0 |   0 |                     - |
+| Y2 |     0 |   0 |                     - |
+| Y1 |     6 |   1 |                     0 |
+| Y0 |  2385 |  22 |                     0 |
++----+-------+-----+-----------------------+
 
 
 8. Device Cell Placement Summary for Global Clock g1
@@ -171,7 +172,7 @@ All Modules
 +-----------+-----------------+-------------------+---------+-------------+---------------+-------------+----------+----------------+----------+------------------------------------------------------------+
 | Global Id | Driver Type/Pin | Driver Region (D) | Clock   | Period (ns) | Waveform (ns) | Slice Loads | IO Loads | Clocking Loads | GT Loads | Net                                                        |
 +-----------+-----------------+-------------------+---------+-------------+---------------+-------------+----------+----------------+----------+------------------------------------------------------------+
-| g1        | BUFG/O          | n/a               | clkout0 |       8.000 | {0.000 4.000} |        2256 |        0 |              0 |        0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
+| g1        | BUFG/O          | n/a               | clkout0 |       8.000 | {0.000 4.000} |        2245 |        0 |              0 |        0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
 +-----------+-----------------+-------------------+---------+-------------+---------------+-------------+----------+----------------+----------+------------------------------------------------------------+
 * Slice Loads column represents load cell count of all cell types other than IO, GT and clock resources
 ** IO Loads column represents load cell count of IO types
@@ -182,11 +183,11 @@ All Modules
 +----+-------+----+-----------------------+
 |    | X0    | X1 | HORIZONTAL PROG DELAY |
 +----+-------+----+-----------------------+
-| Y4 |    63 |  0 |                     0 |
-| Y3 |    23 |  0 |                     0 |
-| Y2 |    67 |  0 |                     0 |
-| Y1 |   326 |  0 |                     0 |
-| Y0 |  1777 |  0 |                     0 |
+| Y4 |    49 |  0 |                     0 |
+| Y3 |    38 |  0 |                     0 |
+| Y2 |    66 |  0 |                     0 |
+| Y1 |   327 |  0 |                     0 |
+| Y0 |  1764 |  1 |                     0 |
 +----+-------+----+-----------------------+
 
 
@@ -208,8 +209,8 @@ All Modules
 |    | X0   | X1 | HORIZONTAL PROG DELAY |
 +----+------+----+-----------------------+
 | Y4 |    1 |  0 |                     0 |
-| Y3 |   10 |  0 |                     0 |
-| Y2 |  274 |  0 |                     0 |
+| Y3 |  101 |  0 |                     0 |
+| Y2 |  183 |  0 |                     0 |
 | Y1 |   39 |  0 |                     0 |
 | Y0 |    1 |  0 |                     0 |
 +----+------+----+-----------------------+
@@ -258,8 +259,8 @@ All Modules
 |    | X0  | X1 | HORIZONTAL PROG DELAY |
 +----+-----+----+-----------------------+
 | Y4 |  58 |  0 |                     0 |
-| Y3 |   7 |  0 |                     0 |
-| Y2 |  11 |  0 |                     0 |
+| Y3 |  18 |  0 |                     0 |
+| Y2 |   0 |  0 |                     - |
 | Y1 |   0 |  0 |                     - |
 | Y0 |   0 |  0 |                     - |
 +----+-----+----+-----------------------+
@@ -346,8 +347,8 @@ All Modules
 +-----------+-------+-----------------+------------+-------------+-----------------+------+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF   | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                        |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |        2295 |               0 | 1369 |         850 |   14 |  30 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out2            |
-| g1        | n/a   | BUFG/O          | None       |        1777 |               0 | 1712 |          18 |   21 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
+| g0        | n/a   | BUFG/O          | None       |        2385 |               0 | 1451 |         852 |   14 |  35 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out2            |
+| g1        | n/a   | BUFG/O          | None       |        1764 |               0 | 1700 |          16 |   21 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
 | g2        | n/a   | BUFG/O          | None       |           1 |               0 |    0 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1            |
 | g5        | n/a   | BUFG/O          | None       |          18 |               0 |    0 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out3            |
 +-----------+-------+-----------------+------------+-------------+-----------------+------+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
@@ -356,14 +357,28 @@ All Modules
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
 
 
-16. Clock Region Cell Placement per Global Clock: Region X0Y1
+16. Clock Region Cell Placement per Global Clock: Region X1Y0
+-------------------------------------------------------------
+
++-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                        |
++-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
+| g0        | n/a   | BUFG/O          | None       |          22 |               0 | 16 |           0 |    0 |   5 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out2            |
+| g1        | n/a   | BUFG/O          | None       |           1 |               0 |  0 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
++-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
+* Clock Loads column represents cell count of net connects that connect to a clock pin. Internal cell leaf pins are not considered
+** Non-Clock Loads column represents cell count of non-clock pin loads
+*** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
+
+
+17. Clock Region Cell Placement per Global Clock: Region X0Y1
 -------------------------------------------------------------
 
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                        |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
-| g0        | n/a   | BUFG/O          | None       |          92 |               0 |  72 |           2 |    4 |  10 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out2            |
-| g1        | n/a   | BUFG/O          | None       |         326 |               0 | 310 |           8 |    4 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
+| g0        | n/a   | BUFG/O          | None       |           6 |               0 |   0 |           0 |    3 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out2            |
+| g1        | n/a   | BUFG/O          | None       |         327 |               0 | 311 |          10 |    3 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2 |
 | g2        | n/a   | BUFG/O          | None       |          39 |               0 |  39 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1            |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+------------------------------------------------------------+
 * Clock Loads column represents cell count of net connects that connect to a clock pin. Internal cell leaf pins are not considered
@@ -371,7 +386,7 @@ All Modules
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
 
 
-17. Clock Region Cell Placement per Global Clock: Region X1Y1
+18. Clock Region Cell Placement per Global Clock: Region X1Y1
 -------------------------------------------------------------
 
 +-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+---------------------------------------------------------------+
@@ -385,16 +400,15 @@ All Modules
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
 
 
-18. Clock Region Cell Placement per Global Clock: Region X0Y2
+19. Clock Region Cell Placement per Global Clock: Region X0Y2
 -------------------------------------------------------------
 
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                             |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
-| g1        | n/a   | BUFG/O          | None       |          67 |               0 |  67 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
-| g2        | n/a   | BUFG/O          | None       |         274 |               0 | 274 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
+| g1        | n/a   | BUFG/O          | None       |          66 |               0 |  66 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
+| g2        | n/a   | BUFG/O          | None       |         183 |               0 | 183 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
 | g3        | n/a   | BUFG/O          | None       |          60 |               0 |  60 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk       |
-| g4        | n/a   | BUFG/O          | None       |          11 |               0 |   7 |           4 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
 | g6        | n/a   | BUFG/O          | None       |           1 |               0 |   0 |           0 |    0 |   0 |  0 |    1 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/txoutclk_bufg |
 +-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
 * Clock Loads column represents cell count of net connects that connect to a clock pin. Internal cell leaf pins are not considered
@@ -402,29 +416,29 @@ All Modules
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
 
 
-19. Clock Region Cell Placement per Global Clock: Region X0Y3
+20. Clock Region Cell Placement per Global Clock: Region X0Y3
 -------------------------------------------------------------
 
-+-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
-| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                             |
-+-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
-| g1        | n/a   | BUFG/O          | None       |          23 |               0 | 23 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
-| g2        | n/a   | BUFG/O          | None       |          10 |               0 | 10 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
-| g3        | n/a   | BUFG/O          | None       |           4 |               0 |  4 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk       |
-| g4        | n/a   | BUFG/O          | None       |           7 |               0 |  7 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
-+-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
++-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
+| Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF  | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                             |
++-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
+| g1        | n/a   | BUFG/O          | None       |          38 |               0 |  38 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
+| g2        | n/a   | BUFG/O          | None       |         101 |               0 | 101 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
+| g3        | n/a   | BUFG/O          | None       |           4 |               0 |   4 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk       |
+| g4        | n/a   | BUFG/O          | None       |          18 |               0 |  14 |           4 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
++-----------+-------+-----------------+------------+-------------+-----------------+-----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
 * Clock Loads column represents cell count of net connects that connect to a clock pin. Internal cell leaf pins are not considered
 ** Non-Clock Loads column represents cell count of non-clock pin loads
 *** Columns FF, LUTRAM, RAMB through 'Hard IP' represents load cell counts
 
 
-20. Clock Region Cell Placement per Global Clock: Region X0Y4
+21. Clock Region Cell Placement per Global Clock: Region X0Y4
 -------------------------------------------------------------
 
 +-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
 | Global Id | Track | Driver Type/Pin | Constraint | Clock Loads | Non-Clock Loads | FF | Memory LUTs | RAMB | DSP | GT | MMCM | PLL | Hard IP | Net                                                             |
 +-----------+-------+-----------------+------------+-------------+-----------------+----+-------------+------+-----+----+------+-----+---------+-----------------------------------------------------------------+
-| g1        | n/a   | BUFG/O          | None       |          63 |               0 | 63 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
+| g1        | n/a   | BUFG/O          | None       |          49 |               0 | 49 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2      |
 | g2        | n/a   | BUFG/O          | None       |           1 |               0 |  0 |           0 |    0 |   0 |  0 |    0 |   0 |       0 | sys_timing_endpoint/clock_manager/inst/clk_out1                 |
 | g3        | n/a   | BUFG/O          | None       |          47 |               0 | 46 |           0 |    0 |   0 |  1 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk       |
 | g4        | n/a   | BUFG/O          | None       |          58 |               0 | 54 |           3 |    0 |   0 |  1 |    0 |   0 |       0 | gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg |
@@ -464,7 +478,7 @@ resize_pblock [get_pblocks {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out
 #startgroup
 create_pblock {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out2}
 add_cells_to_pblock [get_pblocks  {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out2}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="sys_timing_endpoint/clock_manager/inst/clk_out2"}]]]
-resize_pblock [get_pblocks {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out2}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1}
+resize_pblock [get_pblocks {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out2}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0 CLOCKREGION_X1Y1:CLOCKREGION_X1Y1}
 #endgroup
 
 # Clock net "sys_timing_endpoint/clock_manager/inst/clk_out1" driven by instance "sys_timing_endpoint/clock_manager/inst/clkout1_buf" located at site "BUFGCTRL_X0Y2"
@@ -478,7 +492,7 @@ resize_pblock [get_pblocks {CLKAG_sys_timing_endpoint/clock_manager/inst/clk_out
 #startgroup
 create_pblock {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2}
 add_cells_to_pblock [get_pblocks  {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2"}]]]
-resize_pblock [get_pblocks {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X0Y3:CLOCKREGION_X0Y3 CLOCKREGION_X0Y4:CLOCKREGION_X0Y4}
+resize_pblock [get_pblocks {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk2}] -add {CLOCKREGION_X0Y0:CLOCKREGION_X0Y0 CLOCKREGION_X0Y1:CLOCKREGION_X0Y1 CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X0Y3:CLOCKREGION_X0Y3 CLOCKREGION_X0Y4:CLOCKREGION_X0Y4 CLOCKREGION_X1Y0:CLOCKREGION_X1Y0}
 #endgroup
 
 # Clock net "gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/userclk" driven by instance "gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/bufg_userclk" located at site "BUFGCTRL_X0Y3"
@@ -492,5 +506,5 @@ resize_pblock [get_pblocks {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clockin
 #startgroup
 create_pblock {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg}
 add_cells_to_pblock [get_pblocks  {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg}] [get_cells -filter { PRIMITIVE_GROUP != I/O && IS_PRIMITIVE==1 && PRIMITIVE_LEVEL !=INTERNAL } -of_object [get_pins -filter {DIRECTION==IN} -of_objects [get_nets -hierarchical -filter {PARENT=="gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg"}]]]
-resize_pblock [get_pblocks {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg}] -add {CLOCKREGION_X0Y2:CLOCKREGION_X0Y2 CLOCKREGION_X0Y3:CLOCKREGION_X0Y3 CLOCKREGION_X0Y4:CLOCKREGION_X0Y4}
+resize_pblock [get_pblocks {CLKAG_gigabit_ehternet_inst/phy_inst/U0/core_clocking_i/gtrefclk_bufg}] -add {CLOCKREGION_X0Y3:CLOCKREGION_X0Y3 CLOCKREGION_X0Y4:CLOCKREGION_X0Y4}
 #endgroup

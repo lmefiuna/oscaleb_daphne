@@ -59,7 +59,8 @@ entity AquisitionManager is
     trig_sync: in std_logic;
     
     --spy_bufr: out array_9x16_type;
-    spy_bufr_append: out std_logic_vector(143 downto 0);
+    --spy_bufr_append: out std_logic_vector(143 downto 0);
+    y_out : out std_logic_vector(143 downto 0);
     sfp_los:    in std_logic
 
   
@@ -127,21 +128,21 @@ component hpf_pedestal_recovery_filter_v5 is
 end component hpf_pedestal_recovery_filter_v5;
 
 
-component spy_buffers is
-  Port ( 
-    clka:  in std_logic;  
-    reset: in std_logic; -- reset sync to clka
-    trig:  in std_logic; -- trigger pulse sync to clka
-    afe_dout_filtered:   in array_9x16_type; -- data bus from AFE channel
+--component spy_buffers is
+--  Port ( 
+--    clka:  in std_logic;  
+--    reset: in std_logic; -- reset sync to clka
+--    trig:  in std_logic; -- trigger pulse sync to clka
+--    afe_dout_filtered:   in array_9x16_type; -- data bus from AFE channel
 
-    clkb:  in  std_logic;
-    addrb: in  std_logic_vector(11 downto 0);
+--    clkb:  in  std_logic;
+--    addrb: in  std_logic_vector(11 downto 0);
 
   
-    --spy_bufr: out array_9x16_type
-    spy_bufr_append: out std_logic_vector(143 downto 0)
-  );
-end component spy_buffers;
+--    --spy_bufr: out array_9x16_type
+--    spy_bufr_append: out std_logic_vector(143 downto 0)
+--  );
+--end component spy_buffers;
 
 
 begin
@@ -159,7 +160,7 @@ begin
         gen_bs_bit: for b in 8 downto 0 generate
             afe_dout_pad_bits(((b)*16 + 15) downto ((b)*16)) <= afe_dout(b);
             afe_dout_filtered(b) <= afe_dout_pad_filtered_bits(((b)*16 + 15) downto ((b)*16));
-            spy_bufr_append(((b)*16 + 15) downto ((b)*16)) <= spy_bufr(b);
+            --spy_bufr_append(((b)*16 + 15) downto ((b)*16)) <= spy_bufr(b);
         end generate gen_bs_bit;
         
 
@@ -193,22 +194,22 @@ begin
         output_selector => (others => '0'),
         x => afe_dout_pad_bits,
         trigger_output => trigger_wire,
-        y => afe_dout_pad_filtered_bits
+        y => y_out
     );
     
-    gen_spy_buffers: spy_buffers
-    port map (
-        clka => mclk,
-        reset => reset,
-        trig => trig_sync, -----------
-        afe_dout_filtered => afe_dout_filtered,
-        clkb => oeiclk,
-        addrb => rx_addr_reg(11 downto 0),
-        --spy_bufr => spy_bufr_signal
-        spy_bufr_append => spy_bufr_append
-    );
+--    gen_spy_buffers: spy_buffers
+--    port map (
+--        clka => mclk,
+--        reset => reset,
+--        trig => trig_sync, -----------
+--        afe_dout_filtered => afe_dout_filtered,
+--        clkb => oeiclk,
+--        addrb => rx_addr_reg(11 downto 0),
+--        --spy_bufr => spy_bufr_signal
+--        spy_bufr_append => spy_bufr_append
+--    );
     
-    spy_bufr <= spy_bufr_signal;
+--    spy_bufr <= spy_bufr_signal;
     
 
 

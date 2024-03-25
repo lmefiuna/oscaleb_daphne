@@ -90,7 +90,9 @@ architecture Behavioral of top_level is
   signal fe_reset: std_logic;
   signal locked : std_logic;
   signal trig_sync: std_logic;
-  signal spy_bufr_append: std_logic_vector(143 downto 0);
+  signal spy_bufr_append,y_filtered: std_logic_vector(143 downto 0);
+  
+  signal trigger_1hz: std_logic;
   
   component gigabit_ethernet
     port (
@@ -173,7 +175,7 @@ architecture Behavioral of top_level is
       delay_din : in std_logic_vector(4 downto 0); -- delay value to write range 0-31
 
       --spy_bufr        : out array_9x16_type;  
-      spy_bufr_append: out std_logic_vector(143 downto 0); 
+      y_out: out std_logic_vector(143 downto 0); 
       rx_addr_reg : in std_logic_vector(31 downto 0);
       trig_sync: in std_logic;
 
@@ -206,6 +208,32 @@ architecture Behavioral of top_level is
      
      );
     end component eth_mux;
+    
+    
+  component spy_buffers is
+  Port ( 
+    clka:  in std_logic;  
+    reset: in std_logic; -- reset sync to clka
+    trig:  in std_logic; -- trigger pulse sync to clka
+    --afe_filtered:   in array_9x16_type; -- data bus from AFE channel
+    afe_filtered: in std_logic_vector(143 downto 0);
+    clkb:  in  std_logic;
+    addrb: in  std_logic_vector(11 downto 0);  
+    --spy_bufr: out array_9x16_type
+    spy_bufr_append: out std_logic_vector(143 downto 0)
+  );
+end component spy_buffers;
+
+    
+ component Trigger_Manager is
+  Port ( 
+    mclk: in std_logic;
+    trigger: out std_logic
+
+  );
+end component Trigger_Manager;
+    
+    
 begin
 
   reset_async <= not reset_n;
@@ -274,7 +302,7 @@ begin
     delay_ld    => delay_ld, -- delay_ld(4 downto 0),
     sfp_los     => sfp_los_inv,
     rx_addr_reg => rx_addr_reg,
-    spy_bufr_append => spy_bufr_append,
+    y_out => y_filtered,
     --spy_bufr      => spy_bufr,
     --spy_bufr      => open,
     trig_sync =>trig_sync,
@@ -300,6 +328,27 @@ begin
     trig_sync =>trig_sync,
     fe_reset      => fe_reset
   );
+  
+  
+  gen_spy_buffers: spy_buffers
+    port map (
+        clka => sys_clk62_5,
+        reset => fe_reset ,
+        trig => trigger_1hz, -----------
+        afe_filtered => y_filtered,
+        clkb => oeiclk,
+        addrb => rx_addr_reg(11 downto 0),
+        --spy_bufr => spy_bufr_signal
+        spy_bufr_append => spy_bufr_append
+    );
+    
+    --spy_bufr <= spy_bufr_signal;
+    
+    Trig_Manager: Trigger_Manager
+    port map (
+        mclk=>sys_clk62_5,
+        trigger =>trigger_1hz
+    );
 
   leds_controller_inst : leds_controller
   port map(
@@ -315,5 +364,6 @@ begin
 
     led => led
   );
+  --led(0) <= trigger_1hz;
 
 end Behavioral;

@@ -37,11 +37,10 @@ entity spy_buffers is
     clka:  in std_logic;  
     reset: in std_logic; -- reset sync to clka
     trig:  in std_logic; -- trigger pulse sync to clka
-    afe_dout_filtered:   in array_9x16_type; -- data bus from AFE channel
+    afe_filtered:   in  std_logic_vector(143 downto 0); -- data bus from AFE channel
 
     clkb:  in  std_logic;
     addrb: in  std_logic_vector(11 downto 0);
-
   
     --spy_bufr: out array_9x16_type
     spy_bufr_append: out std_logic_vector(143 downto 0)
@@ -50,7 +49,7 @@ end spy_buffers;
 
 
 architecture Behavioral of spy_buffers is
-signal spy_bufr: array_9x16_type;
+signal spy_bufr,afe_dout_filtered: array_9x16_type;
 
 
 
@@ -71,7 +70,11 @@ end component spy;
 
 
 begin
-
+       gen_bs_bit: for b in 8 downto 0 generate
+            afe_dout_filtered(b) <= afe_filtered(((b)*16 + 15) downto ((b)*16));
+            --spy_bufr_append(((b)*16 + 15) downto ((b)*16)) <= spy_bufr(b);
+        end generate gen_bs_bit;
+        
 
 
         gen_spy_bit: for b in 8 downto 0 generate
